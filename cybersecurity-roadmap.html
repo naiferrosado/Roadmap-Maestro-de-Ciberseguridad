@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap Maestro de Ciberseguridad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1117;
+  --panel:#171A23;
+  --panel-2:#1D2130;
+  --line:#2A2F40;
+  --text:#E7E9EE;
+  --text-dim:#9AA1B2;
+  --text-faint:#6B7284;
+  --amber:#F2B134;
+  --amber-dim:#8A6A24;
+  --violet:#9C8CFF;
+  --teal:#5FD1C2;
+  --danger:#E8636B;
+  --max-w:760px;
+  --radius:10px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--text);
+  font-family:'IBM Plex Sans', system-ui, sans-serif;
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{ background:var(--amber); color:#151515; }
+
+/* ---------- layout shell ---------- */
+.shell{
+  display:grid;
+  grid-template-columns:260px minmax(0,1fr);
+  max-width:1180px;
+  margin:0 auto;
+}
+@media (max-width:920px){
+  .shell{grid-template-columns:1fr;}
+}
+
+/* ---------- sidebar ---------- */
+.sidebar{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  padding:28px 18px 40px 28px;
+  border-right:1px solid var(--line);
+  scrollbar-width:thin;
+  scrollbar-color:var(--line) transparent;
+}
+@media (max-width:920px){
+  .sidebar{
+    position:relative;
+    height:auto;
+    border-right:none;
+    border-bottom:1px solid var(--line);
+    padding:22px 20px;
+  }
+}
+.brand{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  letter-spacing:0.06em;
+  color:var(--amber);
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+.brand-sub{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--text-faint);
+  margin-bottom:22px;
+}
+.toc{list-style:none; margin:0; padding:0;}
+.toc li{margin:0;}
+.toc a{
+  display:block;
+  padding:7px 10px;
+  margin:1px 0;
+  border-left:2px solid transparent;
+  color:var(--text-dim);
+  text-decoration:none;
+  font-size:13.5px;
+  font-family:'IBM Plex Mono', monospace;
+  border-radius:4px;
+  transition:all .15s ease;
+  white-space:normal;
+}
+.toc a:hover{ color:var(--text); background:var(--panel); }
+.toc a.active{
+  color:var(--amber);
+  border-left-color:var(--amber);
+  background:var(--panel);
+}
+.toc-label{
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--text-faint);
+  margin:18px 0 6px 10px;
+}
+.toc-label:first-of-type{margin-top:0;}
+
+/* ---------- main content ---------- */
+main{
+  padding:56px 40px 100px;
+  max-width:var(--max-w);
+}
+@media (max-width:920px){
+  main{padding:40px 22px 80px;}
+}
+
+.hero{
+  margin-bottom:44px;
+  padding-bottom:32px;
+  border-bottom:1px solid var(--line);
+}
+.hero-eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  color:var(--teal);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.hero-eyebrow::before{
+  content:"";
+  width:7px; height:7px;
+  background:var(--teal);
+  border-radius:50%;
+  display:inline-block;
+  box-shadow:0 0 8px var(--teal);
+}
+main h1{
+  font-family:'Space Grotesk', sans-serif;
+  font-size:2.15rem;
+  line-height:1.15;
+  font-weight:700;
+  margin:0 0 10px;
+  color:#fff;
+  letter-spacing:-0.01em;
+}
+main > h3:first-of-type{
+  font-family:'IBM Plex Sans', sans-serif;
+  font-weight:400;
+  font-size:1.05rem;
+  color:var(--text-dim);
+  margin:0 0 22px;
+}
+.source-tags{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+.source-tag{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  padding:5px 10px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  color:var(--text-dim);
+}
+
+/* ---------- typography for pandoc output ---------- */
+main h2{
+  font-family:'Space Grotesk', sans-serif;
+  font-size:1.5rem;
+  font-weight:700;
+  color:#fff;
+  margin:56px 0 18px;
+  padding-top:8px;
+  scroll-margin-top:24px;
+  position:relative;
+}
+main h2::before{
+  content:attr(data-phase);
+  display:block;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:var(--amber);
+  letter-spacing:.1em;
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+main p{ color:var(--text); margin:14px 0; }
+main strong{ color:#fff; font-weight:600; }
+main em{ color:var(--text-dim); }
+
+main ul{ margin:12px 0; padding-left:0; list-style:none; }
+main li{
+  position:relative;
+  padding:5px 0 5px 22px;
+  color:var(--text);
+}
+main li::before{
+  content:"›";
+  position:absolute;
+  left:0;
+  color:var(--teal);
+  font-weight:600;
+}
+main ol{ margin:12px 0; padding-left:22px; }
+main ol li{ padding-left:6px; }
+main ol li::before{ content:none; }
+
+main code{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.86em;
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  padding:1px 6px;
+  border-radius:5px;
+  color:var(--teal);
+}
+
+main a{
+  color:var(--teal);
+  text-decoration:underline;
+  text-decoration-color:var(--amber-dim);
+  text-underline-offset:3px;
+  transition:color .15s ease, text-decoration-color .15s ease;
+}
+main a:hover{
+  color:var(--amber);
+  text-decoration-color:var(--amber);
+}
+main blockquote a{ color:var(--amber); }
+
+main blockquote{
+  margin:22px 0;
+  padding:18px 20px;
+  background:var(--panel);
+  border-left:3px solid var(--amber);
+  border-radius:0 8px 8px 0;
+  color:var(--text-dim);
+}
+main blockquote p{ margin:8px 0; color:var(--text-dim); }
+main blockquote strong{ color:var(--text); }
+
+main hr{
+  border:none;
+  border-top:1px solid var(--line);
+  margin:40px 0;
+}
+
+main table{
+  width:100%;
+  border-collapse:collapse;
+  margin:20px 0;
+  font-size:14.5px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+main thead tr{ background:var(--panel-2); }
+main th{
+  text-align:left;
+  padding:11px 14px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  color:var(--amber);
+  border-bottom:1px solid var(--line);
+}
+main td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  color:var(--text-dim);
+  vertical-align:top;
+}
+main td strong{ color:var(--text); }
+main tr:last-child td{ border-bottom:none; }
+
+/* colored accents for specific known sections (Blue/Red team) injected via JS */
+h3#blue-team{ color:var(--teal); }
+h3#red-team{ color:var(--danger); }
+
+footer{
+  padding:30px 40px 60px;
+  color:var(--text-faint);
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  max-width:var(--max-w);
+}
+
+/* progress rail dot on active toc item already styled above */
+.phase-badge{
+  display:inline-block;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--ink);
+  background:var(--amber);
+  padding:2px 8px;
+  border-radius:4px;
+  margin-right:8px;
+  font-weight:600;
+}
+
+/* small print button */
+.top-tools{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  display:flex;
+  gap:8px;
+  z-index:20;
+}
+.tool-btn{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  color:var(--text-dim);
+  padding:9px 14px;
+  border-radius:22px;
+  cursor:pointer;
+  transition:.15s;
+}
+.tool-btn:hover{ color:var(--amber); border-color:var(--amber); }
+@media print{
+  .sidebar, .top-tools{ display:none; }
+  .shell{ display:block; }
+  body{ background:#fff; color:#111; }
+  main h2::before{ color:#000; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">Roadmap Maestro</div>
+    <div class="brand-sub">/ciberseguridad/roadmap.map</div>
+    <ul class="toc" id="toc"></ul>
+  </nav>
+
+  <main id="content">
+    <div class="hero">
+      <div class="hero-eyebrow">Documento de referencia · 3 fuentes fusionadas</div>
+      <h1 id="roadmap-maestro-de-ciberseguridad">🛡️ Roadmap Maestro de Ciberseguridad</h1>
+<h3 id="fusión-analizada-de-3-roadmaps-visual-por-fases-ultimate-mastery-roadmap-esquema-técnico-detallado">Fusión analizada de 3 roadmaps (visual por fases + Ultimate Mastery Roadmap + esquema técnico detallado)</h3>
+<blockquote>
+<p>Este roadmap combina lo mejor de 3 fuentes distintas:</p>
+<ul>
+<li><strong>Fuente 1 — <a href="https://www.geeksforgeeks.org/cybersecurity/cybersecurity-roadmap/">GeeksforGeeks: Cybersecurity Roadmap</a>:</strong> la mejor secuencia lógica por fases (5 niveles claros).</li>
+<li><strong>Fuente 2 — <a href="https://github.com/Hamed233/Cybersecurity-Mastery-Roadmap">Hamed233/Cybersecurity-Mastery-Roadmap (GitHub)</a>:</strong> el catálogo más completo de libros, cursos, herramientas y certificaciones.</li>
+<li><strong>Fuente 3 — <a href="https://roadmap.sh/cyber-security">roadmap.sh/cyber-security</a>:</strong> el detalle granular de conceptos que las otras dos mencionan pero no explican (terminología de redes, tipos de ataques, comandos, protocolos).</li>
+</ul>
+<p>Están ordenadas por <strong>dependencia real de conocimiento</strong>: no se puede entender OWASP sin TCP/IP, no se puede hacer threat hunting sin SIEM, no se puede hacer forense sin entender el sistema de archivos, etc.</p>
+</blockquote>
+    </div>
+    
+<h2 id="cómo-usar-este-roadmap">🧭 Cómo usar este roadmap</h2>
+<p>Cada fase tiene:</p>
+<ul>
+<li><strong>Objetivo</strong> — qué deberías poder hacer al terminarla</li>
+<li><strong>Temas</strong> — el contenido técnico a dominar</li>
+<li><strong>Herramientas</strong> — con qué practicar</li>
+<li><strong>Recursos</strong> — cursos/libros más recomendados (curados, no la lista completa)</li>
+<li><strong>Hito de dominio</strong> — cómo saber que ya puedes avanzar</li>
+<li><strong>Tiempo estimado</strong> — dedicando 10-15h/semana</li>
+</ul>
+<p>No hace falta dominar el 100% de cada fase antes de avanzar — el 70-80% es suficiente para seguir, porque muchos temas se refuerzan en las fases siguientes.</p>
+<hr />
+<h2 id="fase-0-fundamentos-de-it-la-base-que-todos-dan-por-hecho">FASE 0 — Fundamentos de IT (la base que todos dan por hecho)</h2>
+<p><strong>Objetivo:</strong> Entender cómo funciona una computadora y un sistema operativo antes de intentar asegurarlos.</p>
+<p><strong>Temas:</strong></p>
+<ul>
+<li>Componentes de hardware y su función (CPU, RAM, almacenamiento, buses)</li>
+<li>Tipos de conexión (USB, HDMI, Ethernet, etc.) y su propósito</li>
+<li>Sistemas operativos: Windows, Linux, macOS — instalación, versiones, diferencias</li>
+<li>Navegación por GUI y CLI</li>
+<li>Permisos de usuario y sistema de archivos</li>
+<li>Instalación de software y gestión de aplicaciones</li>
+<li>Operaciones CRUD sobre archivos (crear, leer, modificar, borrar)</li>
+<li>Troubleshooting básico independiente del OS</li>
+<li>Suites ofimáticas (MS Office, Google Suite, iCloud) — solo lo esencial</li>
+<li>Conectividad inalámbrica: WiFi, Bluetooth, NFC, Infrarrojo</li>
+</ul>
+<p><strong>Herramientas:</strong> VirtualBox, VMware Player</p>
+<p><strong>Recursos:</strong></p>
+<ul>
+<li>CS50: Introduction to Computer Science</li>
+<li>“Computer Systems: A Programmer’s Perspective” — Bryant &amp; O’Hallaron</li>
+<li>CompTIA A+ (como guía de temario, no necesariamente para certificarte)</li>
+</ul>
+<p><strong>Hito de dominio:</strong> Puedes instalar un SO desde cero, navegar por terminal sin depender del mouse, y explicar qué hace cada componente de una PC.</p>
+<p><strong>Tiempo estimado:</strong> 2-3 semanas (menos si ya tienes experiencia previa en IT o estudias una carrera afín, como Sistemas o Informática)</p>
+<hr />
+<h2 id="fase-1-redes-el-40-de-la-ciberseguridad-ocurre-aquí">FASE 1 — Redes (el 40% de la ciberseguridad ocurre aquí)</h2>
+<p><strong>Objetivo:</strong> Entender cómo viaja la información entre sistemas — sin esto, nada de seguridad tiene sentido.</p>
+<p><strong>Temas:</strong></p>
+<ul>
+<li>Modelo OSI y arquitectura TCP/IP</li>
+<li>Direccionamiento IP: IPv4/IPv6, subnetting, CIDR, máscara de subred, gateway por defecto</li>
+<li>IP pública vs privada, localhost, loopback</li>
+<li>Protocolos comunes y sus puertos: HTTP/HTTPS, DNS, FTP/SFTP, SSH, RDP</li>
+<li>SSL/TLS — fundamentos (no criptografía profunda aún)</li>
+<li>Terminología esencial: VLAN, DMZ, ARP, NAT, DHCP, DNS, VPN</li>
+<li>Topologías de red: estrella, anillo, malla, bus</li>
+<li>Diferencias LAN, WAN, MAN, WLAN</li>
+<li>Conceptos de NAS y SAN</li>
+<li>Virtualización: hipervisor, VM, GuestOS vs HostOS</li>
+</ul>
+<p><strong>Herramientas:</strong></p>
+<ul>
+<li>Wireshark (análisis de paquetes)</li>
+<li>tcpdump (captura por línea de comandos)</li>
+<li>Cisco Packet Tracer / GNS3 (simulación de redes)</li>
+<li>Herramientas de diagnóstico: <code>ping</code>, <code>nslookup</code>, <code>dig</code>, <code>traceroute/tracert</code>, <code>ipconfig</code>/<code>ifconfig</code>, <code>netstat</code>, <code>route</code>, <code>arp</code></li>
+</ul>
+<p><strong>Recursos:</strong></p>
+<ul>
+<li>Computer Networking: A Top-Down Approach</li>
+<li>Stanford CS144: Computer Networking</li>
+<li>Practical Networking (sitio web)</li>
+<li>“TCP/IP Illustrated, Volume 1” — W. Richard Stevens</li>
+</ul>
+<p><strong>Práctica:</strong></p>
+<ul>
+<li>Simular redes en GNS3/Packet Tracer</li>
+<li>Capturar y analizar tráfico real con Wireshark</li>
+<li>Practicar subnetting hasta poder hacerlo mentalmente</li>
+<li>Configurar reglas básicas de firewall</li>
+</ul>
+<p><strong>Hito de dominio:</strong> Puedes explicar el recorrido completo de un paquete desde que escribes una URL hasta que ves la página, y puedes calcular subredes sin calculadora.</p>
+<p><strong>Tiempo estimado:</strong> 4-6 semanas</p>
+<hr />
+<h2 id="fase-2-linux-y-línea-de-comandos">FASE 2 — Linux y Línea de Comandos</h2>
+<p><strong>Objetivo:</strong> Moverte con soltura en Linux, porque es el sistema operativo de facto en seguridad ofensiva, defensiva y servidores.</p>
+<p><strong>Temas:</strong></p>
+<ul>
+<li>Instalación y configuración de distros (Ubuntu, Kali, Arch)</li>
+<li>Sistema de permisos (<code>chmod</code>, <code>chown</code>, usuarios/grupos)</li>
+<li>Gestión de procesos y servicios</li>
+<li>Administración básica de Linux</li>
+<li>Bash scripting para automatización</li>
+</ul>
+<p><strong>Herramientas:</strong> Kali Linux, VirtualBox/Vagrant</p>
+<p><strong>Recursos:</strong></p>
+<ul>
+<li>Linux Journey</li>
+<li>OverTheWire: Bandit (wargame práctico, muy recomendado por su enfoque hands-on)</li>
+<li>“The Linux Command Line” — William Shotts</li>
+</ul>
+<p><strong>Práctica:</strong></p>
+<ul>
+<li>Completar todos los niveles de OverTheWire: Bandit</li>
+<li>Configurar un stack LAMP/LEMP</li>
+<li>Escribir 3-5 scripts bash que automaticen tareas reales (backups, monitoreo de logs, etc.)</li>
+</ul>
+<p><strong>Hito de dominio:</strong> Puedes resolver un problema en un servidor Linux sin buscar cada comando en Google.</p>
+<p><strong>Tiempo estimado:</strong> 3-4 semanas (en paralelo con Fase 1 es válido)</p>
+<hr />
+<h2 id="fase-3-programación-para-seguridad">FASE 3 — Programación para Seguridad</h2>
+<p><strong>Objetivo:</strong> No necesitas ser desarrollador, pero sí necesitas leer y escribir scripts para automatizar y entender exploits/herramientas.</p>
+<p><strong>Temas:</strong></p>
+<ul>
+<li>Python (prioridad #1 — la mayoría de herramientas de seguridad están en Python)</li>
+<li>Bash / PowerShell (automatización en Linux/Windows)</li>
+<li>Nociones de JavaScript (para entender ataques web como XSS)</li>
+<li>Nociones de Go (cada vez más usado en herramientas modernas de seguridad)</li>
+</ul>
+<p><strong>Recursos:</strong></p>
+<ul>
+<li>Python for Everybody</li>
+<li>Automate the Boring Stuff with Python</li>
+<li>“Black Hat Python” — Justin Seitz (cuando llegues a fases ofensivas)</li>
+</ul>
+<p><strong>Práctica:</strong></p>
+<ul>
+<li>Construir un port scanner simple en Python</li>
+<li>Construir un generador de contraseñas</li>
+<li>Automatizar una tarea repetitiva de tu día a día (correo, archivos, backups, reportes, etc.)</li>
+</ul>
+<p><strong>Hito de dominio:</strong> Puedes leer el código fuente de una herramienta de seguridad open source y entender qué hace, línea por línea.</p>
+<p><strong>Tiempo estimado:</strong> Continuo — 3-4 semanas iniciales, luego se refuerza en cada fase siguiente</p>
+<hr />
+<h2 id="fase-4-fundamentos-de-seguridad-de-la-información">FASE 4 — Fundamentos de Seguridad de la Información</h2>
+<p><strong>Objetivo:</strong> Aprender el marco conceptual que sostiene todo lo demás.</p>
+<p><strong>Temas:</strong></p>
+<ul>
+<li>Tríada CIA (Confidencialidad, Integridad, Disponibilidad)</li>
+<li>Autenticación vs Autorización</li>
+<li>Métodos de autenticación: Kerberos, RADIUS, LDAP, SSO, MFA/2FA, certificados</li>
+<li>Criptografía básica: hashing, salting, intercambio de llaves, PKI, llaves públicas/privadas, ofuscación</li>
+<li>Defensa en profundidad (Defense in Depth)</li>
+<li>Zero Trust — conceptos centrales</li>
+<li>Perímetro vs DMZ vs segmentación</li>
+<li>Riesgo: definición y evaluación básica</li>
+<li>Backups y resiliencia</li>
+<li>Cyber Kill Chain y Diamond Model</li>
+<li>Frameworks: MITRE ATT&amp;CK, NIST, ISO 27001, CIS CSF</li>
+</ul>
+<p><strong>Herramientas:</strong> CyberChef, OpenSSL, Hashcat</p>
+<p><strong>Recursos:</strong></p>
+<ul>
+<li>NIST Cybersecurity Framework</li>
+<li>“Security Engineering” — Ross Anderson</li>
+<li>Cryptography I — Stanford (Coursera)</li>
+<li>CompTIA Security+ (temario, y certificación recomendada aquí)</li>
+</ul>
+<p><strong>Práctica:</strong></p>
+<ul>
+<li>Analizar 2-3 casos reales de brechas de seguridad (breach post-mortems)</li>
+<li>Crear una política de seguridad para una organización ficticia</li>
+<li>Resolver retos básicos de criptografía en Cryptopals</li>
+</ul>
+<p><strong>Hito de dominio:</strong> Puedes explicar cualquier incidente de seguridad usando el vocabulario correcto de estos frameworks.</p>
+<p><strong>Tiempo estimado:</strong> 4-5 semanas</p>
+<p><strong>🎯 Certificación recomendada en este punto: CompTIA Security+</strong></p>
+<hr />
+<h2 id="fase-5-herramientas-de-reconocimiento-y-análisis">FASE 5 — Herramientas de Reconocimiento y Análisis</h2>
+<p><strong>Objetivo:</strong> Dominar las herramientas que vas a usar todos los días, sin importar si vas por Red o Blue Team.</p>
+<p><strong>Temas:</strong></p>
+<ul>
+<li>Reconocimiento y OSINT</li>
+<li>Escaneo de puertos y servicios</li>
+<li>Análisis de vulnerabilidades</li>
+<li>Sniffing de paquetes y análisis de protocolos</li>
+</ul>
+<p><strong>Herramientas clave:</strong></p>
+<ul>
+<li><strong>Nmap</strong> — escaneo de red (el más importante de todos)</li>
+<li><strong>Wireshark</strong> — análisis profundo de paquetes</li>
+<li><strong>Shodan</strong> — buscador de dispositivos expuestos en internet</li>
+<li><strong>theHarvester / Recon-ng</strong> — recolección OSINT</li>
+<li><strong>OpenVAS / Nessus Essentials</strong> — escaneo de vulnerabilidades</li>
+</ul>
+<p><strong>Recursos:</strong></p>
+<ul>
+<li>Nmap official guide</li>
+<li>SANS SEC504: Hacker Tools, Techniques, Exploits, and Incident Handling</li>
+</ul>
+<p><strong>Práctica:</strong></p>
+<ul>
+<li>Levantar Metasploitable (máquina vulnerable) y escanearla completa con Nmap</li>
+<li>Hacer un reporte de vulnerabilidades básico sobre esa máquina</li>
+</ul>
+<p><strong>Hito de dominio:</strong> Puedes hacer un reconocimiento completo de una red/host y documentar hallazgos como lo haría un profesional.</p>
+<p><strong>Tiempo estimado:</strong> 2-3 semanas</p>
+<hr />
+<h2 id="fase-6-seguridad-de-aplicaciones-web">FASE 6 — Seguridad de Aplicaciones Web</h2>
+<p><strong>Objetivo:</strong> Entender cómo se rompen las aplicaciones web — esencial incluso si tu meta es SOC, porque la mayoría de alertas que vas a triagear vienen de ataques web.</p>
+<p><strong>Temas (en orden de aparición en el mundo real):</strong></p>
+<ul>
+<li>OWASP Top 10 completo (memorizar y entender cada uno, no solo el nombre)</li>
+<li>SQL Injection (SQLi)</li>
+<li>Cross-Site Scripting (XSS)</li>
+<li>Cross-Site Request Forgery (CSRF)</li>
+<li>Directory Traversal</li>
+<li>Buffer Overflow (concepto, aunque profundizarás en fases avanzadas)</li>
+</ul>
+<p><strong>Herramientas:</strong></p>
+<ul>
+<li>Burp Suite (Community Edition está bien para empezar)</li>
+<li>OWASP ZAP</li>
+<li>SQLmap</li>
+<li>DVWA / OWASP Juice Shop (apps vulnerables para practicar legalmente)</li>
+</ul>
+<p><strong>Recursos:</strong></p>
+<ul>
+<li>PortSwigger Web Security Academy (gratis, es el estándar de la industria)</li>
+<li>OWASP Top Ten (owasp.org)</li>
+<li>“The Web Application Hacker’s Handbook” — Stuttard &amp; Pinto</li>
+</ul>
+<p><strong>Práctica:</strong></p>
+<ul>
+<li>Completar todos los labs de PortSwigger de nivel “Apprentice”</li>
+<li>Explotar DVWA en sus 4 niveles de dificultad</li>
+</ul>
+<p><strong>Hito de dominio:</strong> Puedes identificar y explotar cada vulnerabilidad del OWASP Top 10 en un entorno controlado, y explicar cómo prevenirla en código, sin importar el framework o lenguaje que uses.</p>
+<p><strong>Tiempo estimado:</strong> 4-6 semanas</p>
+<hr />
+<h2 id="fase-7-bifurcación-blue-team-vs-red-team">FASE 7 — Bifurcación: Blue Team vs Red Team</h2>
+<p>A partir de aquí el camino se divide. La recomendación general es no elegir a ciegas: prueba ambas rutas durante 2-3 semanas cada una (con CTFs beginner-friendly) antes de decidir dónde especializarte. Dicho esto, entender cómo atacan es indispensable para defender bien, y viceversa — nadie domina una ruta ignorando por completo la otra.</p>
+<h3 id="blue-team">🔵 Ruta Defensiva (Blue Team / SOC)</h3>
+<p><strong>Temas:</strong></p>
+<ul>
+<li>Arquitectura de un SOC (Security Operations Center)</li>
+<li>SIEM: qué es, cómo funciona, cómo se configuran reglas de detección</li>
+<li>Análisis y correlación de logs</li>
+<li>IDS/IPS: Snort, Suricata</li>
+<li>Threat Hunting — conceptos y metodología</li>
+<li>Threat Intelligence y OSINT aplicado a defensa</li>
+<li>Proceso de Respuesta a Incidentes: Preparación → Identificación → Contención → Erradicación → Recuperación → Lecciones Aprendidas</li>
+<li>Clasificación de amenazas: Zero Day, APT, conocidas vs desconocidas</li>
+<li>Falsos positivos/negativos, verdaderos positivos/negativos</li>
+<li>Honeypots</li>
+<li>Hardening de sistemas: NAC, bloqueo de puertos, GPO, ACLs, parcheo</li>
+</ul>
+<p><strong>Herramientas clave:</strong></p>
+<ul>
+<li><strong>Splunk</strong> — SIEM líder de la industria</li>
+<li><strong>Wazuh / ELK Stack (Elastic + Kibana)</strong> — alternativa open source, ideal para tu home lab</li>
+<li><strong>Security Onion</strong> — plataforma completa de monitoreo</li>
+<li><strong>TheHive + MISP</strong> — gestión de incidentes y threat intel</li>
+<li><strong>Sysmon</strong> — monitoreo avanzado en Windows</li>
+<li><strong>YARA</strong> — detección de patrones de malware</li>
+</ul>
+<p><strong>Recursos:</strong></p>
+<ul>
+<li>Blue Team Labs Online</li>
+<li>“Blue Team Handbook: SOC, SIEM and Threat Hunting” — Don Murdoch</li>
+<li>SANS SEC450: Blue Team Fundamentals</li>
+</ul>
+<p><strong>Práctica (proyecto estrella de portafolio):</strong></p>
+<ul>
+<li>Montar un home lab con Wazuh o Splunk Free</li>
+<li>Generar tráfico de ataque simulado y crear reglas de detección</li>
+<li>Documentar 3-5 “casos de incidente” simulados con tu proceso completo de respuesta</li>
+</ul>
+<p><strong>🎯 Certificaciones:</strong> CompTIA CySA+, GIAC GCIH</p>
+<h3 id="red-team">🔴 Ruta Ofensiva (Red Team / Pentesting)</h3>
+<p><strong>Temas:</strong></p>
+<ul>
+<li>Metodología de pentesting (PTES)</li>
+<li>Explotación con Metasploit</li>
+<li>Escalación de privilegios</li>
+<li>Ingeniería social (conceptual, con permiso explícito para práctica)</li>
+<li>LOLBAS — uso de herramientas legítimas del sistema con fines maliciosos</li>
+</ul>
+<p><strong>Herramientas:</strong> Metasploit, Hydra, John the Ripper, Hashcat, Mimikatz</p>
+<p><strong>Recursos:</strong> TryHackMe, HackTheBox, “The Hacker Playbook 3”</p>
+<p><strong>🎯 Certificación:</strong> OSCP (la más respetada, pero exige mucha práctica previa)</p>
+<p><strong>Hito de dominio (ambas rutas):</strong> Puedes participar en un CTF beginner-friendly (picoCTF, TryHackMe) y resolver al menos el 60% de los retos sin ayuda externa.</p>
+<p><strong>Tiempo estimado:</strong> 8-12 semanas</p>
+<hr />
+<h2 id="fase-8-nube-y-contenedores">FASE 8 — Nube y Contenedores</h2>
+<p><strong>Objetivo:</strong> La infraestructura moderna vive en la nube — sin esto, cualquier perfil de ciberseguridad queda incompleto.</p>
+<p><strong>Temas:</strong></p>
+<ul>
+<li>Modelos de servicio: IaaS, PaaS, SaaS</li>
+<li>Modelos de despliegue: público, privado, híbrido</li>
+<li>Diferencias entre on-premises y cloud</li>
+<li>Infrastructure as Code (concepto)</li>
+<li>Seguridad en AWS/Azure/GCP (elige uno para profundizar — AWS tiene más demanda laboral)</li>
+<li>Seguridad de contenedores: Docker, Kubernetes</li>
+</ul>
+<p><strong>Herramientas:</strong></p>
+<ul>
+<li>AWS Security Hub / Prowler (auditoría de AWS)</li>
+<li>Trivy (escaneo de vulnerabilidades en contenedores)</li>
+<li>Falco (seguridad en runtime de contenedores)</li>
+</ul>
+<p><strong>Recursos:</strong></p>
+<ul>
+<li>AWS Security Fundamentals (curso gratuito)</li>
+<li>“Practical Cloud Security” — Chris Dotson</li>
+</ul>
+<p><strong>Hito de dominio:</strong> Puedes explicar el modelo de responsabilidad compartida en la nube y detectar una mala configuración común (ej. un bucket S3 público).</p>
+<p><strong>Tiempo estimado:</strong> 3-4 semanas</p>
+<hr />
+<h2 id="fase-9-especializaciones-avanzadas-elige-1-2-no-todas">FASE 9 — Especializaciones Avanzadas (elige 1-2, no todas)</h2>
+<p>Ya con la base sólida, aquí es donde te vuelves experto en algo específico. Elige según tu ruta: si vas por Blue Team/SOC, Forense Digital y Análisis de Malware son las más naturales; si vas por Red Team, DevSecOps y Cloud Security suelen tener más demanda.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Especialización</th>
+<th>Por qué te serviría</th>
+<th>Herramientas clave</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Forense Digital</strong></td>
+<td>Complementa perfecto al SOC — cuando hay un incidente, alguien tiene que investigar qué pasó</td>
+<td>Autopsy, Volatility, FTK Imager</td>
+</tr>
+<tr class="even">
+<td><strong>Análisis de Malware</strong></td>
+<td>Entender qué hace el malware que tu SOC detecta</td>
+<td>Ghidra, Cuckoo Sandbox, REMnux, any.run</td>
+</tr>
+<tr class="odd">
+<td><strong>DevSecOps</strong></td>
+<td>Integrar seguridad en pipelines CI/CD — alta demanda</td>
+<td>SonarQube, Snyk, OWASP Dependency-Check</td>
+</tr>
+<tr class="even">
+<td><strong>Cloud Security</strong></td>
+<td>Si te inclinas más hacia infraestructura que hacia SOC tradicional</td>
+<td>Prowler, ScoutSuite, Pacu</td>
+</tr>
+<tr class="odd">
+<td><strong>Threat Intelligence</strong></td>
+<td>Evolución natural de un SOC Analyst senior</td>
+<td>MISP, OpenCTI, MITRE ATT&amp;CK Navigator</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recursos según elección:</strong> ver la sección de recursos curados al final del documento.</p>
+<p><strong>Tiempo estimado:</strong> 6-8 semanas por especialización</p>
+<hr />
+<h2 id="fase-10-práctica-continua-y-comunidad">FASE 10 — Práctica Continua y Comunidad</h2>
+<p>Esto no es una fase que termina — es el hábito que mantienes para siempre.</p>
+<p><strong>CTFs (en orden de dificultad):</strong></p>
+<ol type="1">
+<li>picoCTF (principiante absoluto)</li>
+<li>TryHackMe (aprendizaje guiado)</li>
+<li>HackTheBox (más desafiante, sin guía)</li>
+<li>CTFtime.org (calendario de competencias en vivo)</li>
+</ol>
+<p><strong>Comunidades:</strong></p>
+<ul>
+<li>Reddit: r/cybersecurity, r/AskNetsec, r/netsec</li>
+<li>Discord de TryHackMe</li>
+<li>Women in Cybersecurity (WiCyS) — si aplica a tu red de contactos</li>
+<li>OWASP chapters locales (revisa si hay comunidad en RD)</li>
+</ul>
+<p><strong>Consumo continuo:</strong></p>
+<ul>
+<li>Blogs: Krebs on Security, The Hacker News, BleepingComputer</li>
+<li>YouTube: IppSec (walkthroughs de HackTheBox), John Hammond, NetworkChuck</li>
+<li>Newsletters de seguridad semanales</li>
+</ul>
+<hr />
+<h2 id="ruta-de-certificaciones-recomendada-orden-ideal-para-ti">📜 Ruta de Certificaciones Recomendada (orden ideal para ti)</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Orden</th>
+<th>Certificación</th>
+<th>Cuándo tomarla</th>
+<th>Por qué</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><strong>CompTIA Security+</strong></td>
+<td>Después de Fase 4</td>
+<td>Estándar de entrada, la piden en casi todas las vacantes junior</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><strong>CompTIA CySA+</strong></td>
+<td>Después de Fase 7 (Blue Team)</td>
+<td>Enfocada 100% en detección y respuesta — perfecta para SOC</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><strong>GIAC GCIH</strong></td>
+<td>Con experiencia práctica en incident response</td>
+<td>Reconocida y técnica, sube tu perfil sobre CySA+</td>
+</tr>
+<tr class="even">
+<td>Opcional</td>
+<td><strong>CEH</strong></td>
+<td>Si quieres balance ofensivo/defensivo</td>
+<td>Amplia pero menos técnica que OSCP</td>
+</tr>
+<tr class="odd">
+<td>Avanzado</td>
+<td><strong>OSCP</strong></td>
+<td>Solo si te inclinas fuerte hacia pentesting</td>
+<td>La más respetada en el mundo ofensivo, requiere examen práctico de 24h</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="recursos-curados-por-categoría-lo-mejor-de-las-3-fuentes-sin-duplicados">🗂️ Recursos Curados por Categoría (lo mejor de las 3 fuentes, sin duplicados)</h2>
+<p><strong>Libros esenciales (en orden de lectura):</strong></p>
+<ol type="1">
+<li>“Cybersecurity for Beginners” — Raef Meeuwisse</li>
+<li>“Computer Security: Principles and Practice” — William Stallings</li>
+<li>“The Web Application Hacker’s Handbook” — Stuttard &amp; Pinto</li>
+<li>“Blue Team Handbook” — Don Murdoch</li>
+<li>“Practical Malware Analysis” — Sikorski &amp; Honig (cuando llegues a esa especialización)</li>
+</ol>
+<p><strong>Plataformas de práctica imprescindibles:</strong></p>
+<ul>
+<li>TryHackMe (mejor punto de partida)</li>
+<li>HackTheBox (cuando ya tengas base)</li>
+<li>PortSwigger Web Security Academy (gratis, obligatorio para web)</li>
+<li>OverTheWire (para Linux/fundamentos)</li>
+</ul>
+<p><strong>Labs vulnerables para montar en casa:</strong></p>
+<ul>
+<li>Metasploitable</li>
+<li>DVWA</li>
+<li>OWASP Juice Shop</li>
+</ul>
+<hr />
+<h2 id="línea-de-tiempo-total-estimada">⏱️ Línea de Tiempo Total Estimada</h2>
+<ul>
+<li><strong>Fases 0-4 (fundamentos):</strong> ~4 meses</li>
+<li><strong>Fases 5-7 (herramientas + especialización SOC/pentesting):</strong> ~4 meses</li>
+<li><strong>Fases 8-9 (nube + especialización avanzada):</strong> ~2-3 meses</li>
+<li><strong>Total hasta perfil empleable junior:</strong> ~10-12 meses de estudio constante (10-15h/semana)</li>
+</ul>
+<p>Si prefieres, puedes desglosar cada fase en un plan semana a semana con objetivos concretos — eso ayuda mucho a mantener el ritmo en un roadmap tan largo.</p>
+<hr />
+<h2 id="créditos-y-fuentes">🙏 Créditos y Fuentes</h2>
+<p>Este roadmap fue construido analizando, reordenando y fusionando el contenido de las siguientes 3 fuentes. Todo el mérito del contenido original es de sus respectivos autores:</p>
+<ol type="1">
+<li><strong><a href="https://www.geeksforgeeks.org/cybersecurity/cybersecurity-roadmap/">GeeksforGeeks — Cybersecurity Roadmap</a></strong></li>
+<li><strong><a href="https://github.com/Hamed233/Cybersecurity-Mastery-Roadmap">Hamed233 — Cybersecurity-Mastery-Roadmap (GitHub)</a></strong></li>
+<li><strong><a href="https://roadmap.sh/cyber-security">roadmap.sh — Cyber Security</a></strong></li>
+</ol>
+<p>Este documento no pretende reemplazar ninguna de las 3 fuentes originales, sino ofrecer una versión reorganizada por dependencia lógica de conocimiento, con detalles adicionales de tiempos estimados, hitos de dominio y orden de certificaciones.</p>
+
+  </main>
+</div>
+
+<div class="top-tools">
+  <button class="tool-btn" onclick="window.print()">Imprimir / PDF</button>
+  <button class="tool-btn" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Inicio</button>
+</div>
+
+<script>
+(function(){
+  const main = document.getElementById('content');
+  const toc = document.getElementById('toc');
+  const headers = main.querySelectorAll('h2');
+
+  let phaseCount = 0;
+  headers.forEach((h, i) => {
+    const isPhase = /^FASE/.test(h.textContent.trim());
+    if(isPhase){
+      const num = h.textContent.match(/FASE\s*(\d+)/i);
+      h.setAttribute('data-phase', num ? 'Fase ' + num[1].padStart(2,'0') : 'Fase');
+    } else {
+      h.setAttribute('data-phase', '§');
+    }
+
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent.replace(/^FASE\s*\d+\s*—\s*/i, (m)=>m).trim();
+    a.dataset.target = h.id;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+
+  const links = toc.querySelectorAll('a');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const id = entry.target.id;
+      const link = toc.querySelector('a[data-target="'+id+'"]');
+      if(!link) return;
+      if(entry.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -75% 0px', threshold: 0 });
+
+  headers.forEach(h => observer.observe(h));
+})();
+</script>
+</body>
+</html>
