@@ -49,7 +49,9 @@ No hace falta dominar el 100% de cada fase antes de avanzar — el 70-80% es suf
 
 - CS50: Introduction to Computer Science
 - "Computer Systems: A Programmer's Perspective" — Bryant & O'Hallaron
-- CompTIA A+ (como guía de temario, no necesariamente para certificarte)
+- **CompTIA A+ (220-1201/1202) — Professor Messer (curso oficial recomendado):**
+  - [A+ 220-1201 (Core 1) — Professor Messer](https://youtube.com/playlist?list=PLG49S3nxzAnnes8ZGI-OBlKEukHCX46N8)
+  - [A+ 220-1202 (Core 2) — Professor Messer](https://youtube.com/playlist?list=PLG49S3nxzAnn7PDGQ17m5AYbDRhnW7vOb)
 
 **Hito de dominio:** Puedes instalar un SO desde cero, navegar por terminal sin depender del mouse, y explicar qué hace cada componente de una PC.
 
@@ -87,6 +89,9 @@ No hace falta dominar el 100% de cada fase antes de avanzar — el 70-80% es suf
 - Stanford CS144: Computer Networking
 - Practical Networking (sitio web)
 - "TCP/IP Illustrated, Volume 1" — W. Richard Stevens
+- **CompTIA Network+ (N10-009) — curso oficial recomendado:**
+  - [Network+ N10-009 — Professor Messer](https://youtube.com/playlist?list=PLG49S3nxzAnl_tQe3kvnmeMid0mjF8Le8)
+  - [Network+ N10-009 — curso animado completo (PowerCert)](https://youtu.be/CY4hn70K3r8)
 
 **Práctica:**
 
@@ -187,7 +192,9 @@ No hace falta dominar el 100% de cada fase antes de avanzar — el 70-80% es suf
 - NIST Cybersecurity Framework
 - "Security Engineering" — Ross Anderson
 - Cryptography I — Stanford (Coursera)
-- CompTIA Security+ (temario, y certificación recomendada aquí)
+- **CompTIA Security+ (SY0-701) — curso oficial recomendado:**
+  - [Security+ SY0-701 — Professor Messer](https://youtube.com/playlist?list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv)
+  - [Security+ SY0-701 — curso alternativo completo (BurningIceTech)](https://youtube.com/playlist?list=PLc6LqxQFwub864EdhbzrTGkE1xeW5WE8E)
 
 **Práctica:**
 
