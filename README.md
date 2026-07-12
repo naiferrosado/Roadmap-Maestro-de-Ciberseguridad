@@ -1,15 +1,5 @@
 # 🛡️ Roadmap Maestro de Ciberseguridad
-### Fusión analizada de 3 roadmaps (visual por fases + Ultimate Mastery Roadmap + esquema técnico detallado)
 
-> Este roadmap combina lo mejor de 3 fuentes distintas:
->
-> - **Fuente 1 — [GeeksforGeeks: Cybersecurity Roadmap](https://www.geeksforgeeks.org/cybersecurity/cybersecurity-roadmap/):** la mejor secuencia lógica por fases (5 niveles claros).
-> - **Fuente 2 — [Hamed233/Cybersecurity-Mastery-Roadmap (GitHub)](https://github.com/Hamed233/Cybersecurity-Mastery-Roadmap):** el catálogo más completo de libros, cursos, herramientas y certificaciones.
-> - **Fuente 3 — [roadmap.sh/cyber-security](https://roadmap.sh/cyber-security):** el detalle granular de conceptos que las otras dos mencionan pero no explican (terminología de redes, tipos de ataques, comandos, protocolos).
->
-> Están ordenadas por **dependencia real de conocimiento**: no se puede entender OWASP sin TCP/IP, no se puede hacer threat hunting sin SIEM, no se puede hacer forense sin entender el sistema de archivos, etc.
-
----
 
 ## 🧭 Cómo usar este roadmap
 
@@ -28,17 +18,18 @@ No hace falta dominar el 100% de cada fase antes de avanzar — el 70-80% es suf
 
 ## FASE 0 — Fundamentos de IT (la base que todos dan por hecho)
 
-**Objetivo:** Entender cómo funciona una computadora y un sistema operativo antes de intentar asegurarlos.
+**Objetivo:** Entender cómo funciona una computadora y qué es un sistema operativo, a nivel general — sin profundizar todavía en ningún OS específico.
+
+> ⚠️ Todo lo específico de Linux (terminal, permisos, administración) se cubre en la **Fase 2**, no aquí.
 
 **Temas:**
 
 - Componentes de hardware y su función (CPU, RAM, almacenamiento, buses)
 - Tipos de conexión (USB, HDMI, Ethernet, etc.) y su propósito
-- Sistemas operativos: Windows, Linux, macOS — instalación, versiones, diferencias
-- Navegación por GUI y CLI
-- Permisos de usuario y sistema de archivos
+- Conceptos generales de sistemas operativos: qué son, tipos principales (Windows, macOS, Linux, móvil) y sus diferencias de alto nivel
+- Instalación básica de un sistema operativo de escritorio (instalar y ya — la práctica profunda de Linux es en Fase 2)
 - Instalación de software y gestión de aplicaciones
-- Operaciones CRUD sobre archivos (crear, leer, modificar, borrar)
+- Operaciones CRUD sobre archivos (crear, leer, modificar, borrar) a nivel de usuario, vía interfaz gráfica
 - Troubleshooting básico independiente del OS
 - Suites ofimáticas (MS Office, Google Suite, iCloud) — solo lo esencial
 - Conectividad inalámbrica: WiFi, Bluetooth, NFC, Infrarrojo
@@ -53,7 +44,7 @@ No hace falta dominar el 100% de cada fase antes de avanzar — el 70-80% es suf
   - [A+ 220-1201 (Core 1) — Professor Messer](https://youtube.com/playlist?list=PLG49S3nxzAnnes8ZGI-OBlKEukHCX46N8)
   - [A+ 220-1202 (Core 2) — Professor Messer](https://youtube.com/playlist?list=PLG49S3nxzAnn7PDGQ17m5AYbDRhnW7vOb)
 
-**Hito de dominio:** Puedes instalar un SO desde cero, navegar por terminal sin depender del mouse, y explicar qué hace cada componente de una PC.
+**Hito de dominio:** Puedes instalar un sistema operativo de escritorio desde cero, identificar los componentes de una PC y explicar para qué sirve cada uno, y resolver problemas básicos de hardware/software sin necesitar terminal todavía.
 
 **Tiempo estimado:** 2-3 semanas (menos si ya tienes experiencia previa en IT o estudias una carrera afín, como Sistemas o Informática)
 
@@ -110,9 +101,12 @@ No hace falta dominar el 100% de cada fase antes de avanzar — el 70-80% es suf
 
 **Objetivo:** Moverte con soltura en Linux, porque es el sistema operativo de facto en seguridad ofensiva, defensiva y servidores.
 
+> 📍 Continuación directa de la Fase 0 — aquí es donde realmente aprendes Linux a fondo.
+
 **Temas:**
 
 - Instalación y configuración de distros (Ubuntu, Kali, Arch)
+- Navegación por línea de comandos: estructura de directorios, comandos básicos de archivos
 - Sistema de permisos (`chmod`, `chown`, usuarios/grupos)
 - Gestión de procesos y servicios
 - Administración básica de Linux
