@@ -82,6 +82,47 @@ body{
   color:var(--text-faint);
   margin-bottom:22px;
 }
+.progress-block{
+  margin-bottom:24px;
+  padding:14px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:8px;
+}
+.progress-text{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  color:var(--text-dim);
+  margin-bottom:8px;
+  display:flex;
+  justify-content:space-between;
+}
+.progress-track{
+  height:6px;
+  background:var(--panel-2);
+  border-radius:4px;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  width:0%;
+  background:var(--amber);
+  border-radius:4px;
+  transition:width .3s ease;
+}
+.reset-link{
+  display:inline-block;
+  margin-top:9px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10.5px;
+  color:var(--text-faint);
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  text-decoration:underline;
+}
+.reset-link:hover{ color:var(--danger); }
 .toc{list-style:none; margin:0; padding:0;}
 .toc li{margin:0;}
 .toc a{
@@ -204,16 +245,51 @@ main em{ color:var(--text-dim); }
 main ul{ margin:12px 0; padding-left:0; list-style:none; }
 main li{
   position:relative;
-  padding:5px 0 5px 22px;
+  padding:5px 0 5px 30px;
   color:var(--text);
+  transition:opacity .2s ease;
 }
-main li::before{
+main li.no-check{ padding-left:22px; }
+main li.no-check::before{
   content:"›";
   position:absolute;
   left:0;
   color:var(--teal);
   font-weight:600;
 }
+.li-checkbox{
+  position:absolute;
+  left:0;
+  top:9px;
+  width:16px;
+  height:16px;
+  margin:0;
+  cursor:pointer;
+  accent-color:var(--amber);
+  flex-shrink:0;
+}
+main li.done{
+  color:var(--text-faint);
+  text-decoration:line-through;
+  text-decoration-color:var(--text-faint);
+}
+main li.done strong{ color:var(--text-faint); }
+main li.done > ul{
+  color:var(--text);
+  text-decoration:none;
+}
+main li ul li.done{
+  color:var(--text-faint);
+  text-decoration:line-through;
+  text-decoration-color:var(--text-faint);
+}
+main li.done > a{ color:var(--text-faint); text-decoration:line-through; text-decoration-color:var(--text-faint); }
+main li ul{
+  margin:6px 0 6px 4px;
+  padding-left:14px;
+  border-left:1px solid var(--line);
+}
+main li ul li{ padding:4px 0 4px 28px; font-size:0.95em; }
 main ol{ margin:12px 0; padding-left:22px; }
 main ol li{ padding-left:6px; }
 main ol li::before{ content:none; }
@@ -347,23 +423,21 @@ footer{
   <nav class="sidebar" id="sidebar">
     <div class="brand">Roadmap Maestro</div>
     <div class="brand-sub">/ciberseguridad/roadmap.map</div>
+    <div class="progress-block">
+      <div class="progress-text">
+        <span id="progressText">0 / 0 completado</span>
+        <span id="progressPct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
+      <button class="reset-link" id="resetProgress">Reiniciar progreso</button>
+    </div>
     <ul class="toc" id="toc"></ul>
   </nav>
 
   <main id="content">
     <div class="hero">
-      <div class="hero-eyebrow">Documento de referencia · 3 fuentes fusionadas</div>
+      <div class="hero-eyebrow">Documento de referencia</div>
       <h1 id="roadmap-maestro-de-ciberseguridad">🛡️ Roadmap Maestro de Ciberseguridad</h1>
-<h3 id="fusión-analizada-de-3-roadmaps-visual-por-fases-ultimate-mastery-roadmap-esquema-técnico-detallado">Fusión analizada de 3 roadmaps (visual por fases + Ultimate Mastery Roadmap + esquema técnico detallado)</h3>
-<blockquote>
-<p>Este roadmap combina lo mejor de 3 fuentes distintas:</p>
-<ul>
-<li><strong>Fuente 1 — <a href="https://www.geeksforgeeks.org/cybersecurity/cybersecurity-roadmap/">GeeksforGeeks: Cybersecurity Roadmap</a>:</strong> la mejor secuencia lógica por fases (5 niveles claros).</li>
-<li><strong>Fuente 2 — <a href="https://github.com/Hamed233/Cybersecurity-Mastery-Roadmap">Hamed233/Cybersecurity-Mastery-Roadmap (GitHub)</a>:</strong> el catálogo más completo de libros, cursos, herramientas y certificaciones.</li>
-<li><strong>Fuente 3 — <a href="https://roadmap.sh/cyber-security">roadmap.sh/cyber-security</a>:</strong> el detalle granular de conceptos que las otras dos mencionan pero no explican (terminología de redes, tipos de ataques, comandos, protocolos).</li>
-</ul>
-<p>Están ordenadas por <strong>dependencia real de conocimiento</strong>: no se puede entender OWASP sin TCP/IP, no se puede hacer threat hunting sin SIEM, no se puede hacer forense sin entender el sistema de archivos, etc.</p>
-</blockquote>
     </div>
     
 <h2 id="cómo-usar-este-roadmap">🧭 Cómo usar este roadmap</h2>
@@ -379,16 +453,18 @@ footer{
 <p>No hace falta dominar el 100% de cada fase antes de avanzar — el 70-80% es suficiente para seguir, porque muchos temas se refuerzan en las fases siguientes.</p>
 <hr />
 <h2 id="fase-0-fundamentos-de-it-la-base-que-todos-dan-por-hecho">FASE 0 — Fundamentos de IT (la base que todos dan por hecho)</h2>
-<p><strong>Objetivo:</strong> Entender cómo funciona una computadora y un sistema operativo antes de intentar asegurarlos.</p>
+<p><strong>Objetivo:</strong> Entender cómo funciona una computadora y qué es un sistema operativo, a nivel general — sin profundizar todavía en ningún OS específico.</p>
+<blockquote>
+<p>⚠️ Todo lo específico de Linux (terminal, permisos, administración) se cubre en la <strong>Fase 2</strong>, no aquí.</p>
+</blockquote>
 <p><strong>Temas:</strong></p>
 <ul>
 <li>Componentes de hardware y su función (CPU, RAM, almacenamiento, buses)</li>
 <li>Tipos de conexión (USB, HDMI, Ethernet, etc.) y su propósito</li>
-<li>Sistemas operativos: Windows, Linux, macOS — instalación, versiones, diferencias</li>
-<li>Navegación por GUI y CLI</li>
-<li>Permisos de usuario y sistema de archivos</li>
+<li>Conceptos generales de sistemas operativos: qué son, tipos principales (Windows, macOS, Linux, móvil) y sus diferencias de alto nivel</li>
+<li>Instalación básica de un sistema operativo de escritorio (instalar y ya — la práctica profunda de Linux es en Fase 2)</li>
 <li>Instalación de software y gestión de aplicaciones</li>
-<li>Operaciones CRUD sobre archivos (crear, leer, modificar, borrar)</li>
+<li>Operaciones CRUD sobre archivos (crear, leer, modificar, borrar) a nivel de usuario, vía interfaz gráfica</li>
 <li>Troubleshooting básico independiente del OS</li>
 <li>Suites ofimáticas (MS Office, Google Suite, iCloud) — solo lo esencial</li>
 <li>Conectividad inalámbrica: WiFi, Bluetooth, NFC, Infrarrojo</li>
@@ -398,9 +474,13 @@ footer{
 <ul>
 <li>CS50: Introduction to Computer Science</li>
 <li>“Computer Systems: A Programmer’s Perspective” — Bryant &amp; O’Hallaron</li>
-<li>CompTIA A+ (como guía de temario, no necesariamente para certificarte)</li>
+<li><strong>CompTIA A+ (220-1201/1202) — Professor Messer (curso oficial recomendado):</strong>
+<ul>
+<li><a href="https://youtube.com/playlist?list=PLG49S3nxzAnnes8ZGI-OBlKEukHCX46N8">A+ 220-1201 (Core 1) — Professor Messer</a></li>
+<li><a href="https://youtube.com/playlist?list=PLG49S3nxzAnn7PDGQ17m5AYbDRhnW7vOb">A+ 220-1202 (Core 2) — Professor Messer</a></li>
+</ul></li>
 </ul>
-<p><strong>Hito de dominio:</strong> Puedes instalar un SO desde cero, navegar por terminal sin depender del mouse, y explicar qué hace cada componente de una PC.</p>
+<p><strong>Hito de dominio:</strong> Puedes instalar un sistema operativo de escritorio desde cero, identificar los componentes de una PC y explicar para qué sirve cada uno, y resolver problemas básicos de hardware/software sin necesitar terminal todavía.</p>
 <p><strong>Tiempo estimado:</strong> 2-3 semanas (menos si ya tienes experiencia previa en IT o estudias una carrera afín, como Sistemas o Informática)</p>
 <hr />
 <h2 id="fase-1-redes-el-40-de-la-ciberseguridad-ocurre-aquí">FASE 1 — Redes (el 40% de la ciberseguridad ocurre aquí)</h2>
@@ -431,6 +511,11 @@ footer{
 <li>Stanford CS144: Computer Networking</li>
 <li>Practical Networking (sitio web)</li>
 <li>“TCP/IP Illustrated, Volume 1” — W. Richard Stevens</li>
+<li><strong>CompTIA Network+ (N10-009) — curso oficial recomendado:</strong>
+<ul>
+<li><a href="https://youtube.com/playlist?list=PLG49S3nxzAnl_tQe3kvnmeMid0mjF8Le8">Network+ N10-009 — Professor Messer</a></li>
+<li><a href="https://youtu.be/CY4hn70K3r8">Network+ N10-009 — curso animado completo (PowerCert)</a></li>
+</ul></li>
 </ul>
 <p><strong>Práctica:</strong></p>
 <ul>
@@ -444,9 +529,13 @@ footer{
 <hr />
 <h2 id="fase-2-linux-y-línea-de-comandos">FASE 2 — Linux y Línea de Comandos</h2>
 <p><strong>Objetivo:</strong> Moverte con soltura en Linux, porque es el sistema operativo de facto en seguridad ofensiva, defensiva y servidores.</p>
+<blockquote>
+<p>📍 Continuación directa de la Fase 0 — aquí es donde realmente aprendes Linux a fondo.</p>
+</blockquote>
 <p><strong>Temas:</strong></p>
 <ul>
 <li>Instalación y configuración de distros (Ubuntu, Kali, Arch)</li>
+<li>Navegación por línea de comandos: estructura de directorios, comandos básicos de archivos</li>
 <li>Sistema de permisos (<code>chmod</code>, <code>chown</code>, usuarios/grupos)</li>
 <li>Gestión de procesos y servicios</li>
 <li>Administración básica de Linux</li>
@@ -514,7 +603,11 @@ footer{
 <li>NIST Cybersecurity Framework</li>
 <li>“Security Engineering” — Ross Anderson</li>
 <li>Cryptography I — Stanford (Coursera)</li>
-<li>CompTIA Security+ (temario, y certificación recomendada aquí)</li>
+<li><strong>CompTIA Security+ (SY0-701) — curso oficial recomendado:</strong>
+<ul>
+<li><a href="https://youtube.com/playlist?list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv">Security+ SY0-701 — Professor Messer</a></li>
+<li><a href="https://youtube.com/playlist?list=PLc6LqxQFwub864EdhbzrTGkE1xeW5WE8E">Security+ SY0-701 — curso alternativo completo (BurningIceTech)</a></li>
+</ul></li>
 </ul>
 <p><strong>Práctica:</strong></p>
 <ul>
@@ -836,6 +929,7 @@ footer{
 </div>
 
 <script>
+try{
 (function(){
   const main = document.getElementById('content');
   const toc = document.getElementById('toc');
@@ -861,20 +955,77 @@ footer{
   });
 
   const links = toc.querySelectorAll('a');
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      const id = entry.target.id;
-      const link = toc.querySelector('a[data-target="'+id+'"]');
-      if(!link) return;
-      if(entry.isIntersecting){
-        links.forEach(l=>l.classList.remove('active'));
-        link.classList.add('active');
+  if(typeof IntersectionObserver !== 'undefined'){
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        const id = entry.target.id;
+        const link = toc.querySelector('a[data-target="'+id+'"]');
+        if(!link) return;
+        if(entry.isIntersecting){
+          links.forEach(l=>l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-10% 0px -75% 0px', threshold: 0 });
+
+    headers.forEach(h => observer.observe(h));
+  }
+})();
+} catch(e){ console.error('TOC init error:', e); }
+
+try{
+(function(){
+  const STORAGE_KEY = 'cybersecurity-roadmap-progress-v1';
+  const main = document.getElementById('content');
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){ saved = {}; }
+
+  const items = Array.from(main.querySelectorAll('li')).filter(li => !li.closest('blockquote'));
+
+  function updateProgress(){
+    const total = items.length;
+    const done = items.filter(li => li.classList.contains('done')).length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    const textEl = document.getElementById('progressText');
+    const pctEl = document.getElementById('progressPct');
+    const bar = document.getElementById('progressBar');
+    if(textEl) textEl.textContent = done + ' / ' + total + ' completado';
+    if(pctEl) pctEl.textContent = pct + '%';
+    if(bar) bar.style.width = pct + '%';
+  }
+
+  items.forEach((li, idx) => {
+    const id = 'item-' + idx;
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'li-checkbox';
+    checkbox.setAttribute('aria-label', 'Marcar como completado');
+    checkbox.checked = !!saved[id];
+    if(checkbox.checked) li.classList.add('done');
+
+    checkbox.addEventListener('change', () => {
+      saved[id] = checkbox.checked;
+      li.classList.toggle('done', checkbox.checked);
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch(e){}
+      updateProgress();
+    });
+
+    li.insertBefore(checkbox, li.firstChild);
+  });
+
+  updateProgress();
+
+  const resetBtn = document.getElementById('resetProgress');
+  if(resetBtn){
+    resetBtn.addEventListener('click', () => {
+      if(confirm('¿Borrar todo tu progreso guardado en este navegador?')){
+        try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+        location.reload();
       }
     });
-  }, { rootMargin: '-10% 0px -75% 0px', threshold: 0 });
-
-  headers.forEach(h => observer.observe(h));
+  }
 })();
+} catch(e){ console.error('Checklist init error:', e); }
 </script>
 </body>
 </html>
